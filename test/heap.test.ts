@@ -40,7 +40,7 @@ describe('heap', () => {
       expect(heap.heapSize).toEqual(1);
       expect(heap.max()).toEqual(1);
     });
-    it('when adding element to empty heap', () => {
+    it('when adding element to non-empty heap', () => {
       const heap = new Heap<number>([1, 2, 3, 4]);
       heap.insert(10);
       expect(heap.heapSize).toEqual(5);
