@@ -1,4 +1,5 @@
-import { Heap, parentNode } from './../src/heap';
+import { Heap } from './../src/heap';
+import { assertHeapProperty } from './utils';
 
 describe('heap', () => {
   const getRandomString = (length: number): string => {
@@ -12,10 +13,6 @@ describe('heap', () => {
       );
     return result.join('');
   };
-
-  function assertHeapProperty<T>(items: T[]): void {
-    expect(items.some((_x, i, a) => a[i] > a[parentNode(i)])).toBeFalsy();
-  }
 
   describe('creation', () => {
     it('works', () => {

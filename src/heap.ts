@@ -42,7 +42,7 @@ export class Heap<T> implements PriorityQueue<T> {
     const last = this.extractLast();
     if (this.heapSize > 0) {
       this.items[i] = last;
-      if (this.items[i] > this.items[parentNode(i)]) {
+      if (this.comparer(this.items[i], this.items[parentNode(i)]) >= 1) {
         this.heapFilterUp(i);
       } else {
         this.heapify(this.items, i);
@@ -57,7 +57,7 @@ export class Heap<T> implements PriorityQueue<T> {
   }
 
   private heapFilterUp(i: number) {
-    while (this.items[i] > this.items[parentNode(i)]) {
+    while (this.comparer(this.items[i], this.items[parentNode(i)]) >= 1) {
       swap(this.items, i, parentNode(i));
       i = parentNode(i);
     }
