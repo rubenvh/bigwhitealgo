@@ -20,7 +20,11 @@ export class Heap<T> implements PriorityQueue<T> {
   }
   max = (): T => this.items[0];
   extractMax(): T {
-    throw new Error("Method not implemented.");
+    const result = this.max();
+    this.items[0] = this.items[--this.heapSize];
+    this.items.length = this.heapSize;
+    this.heapify(this.items, 0);
+    return result;
   }
 
   private buildHeap(items: T[]): T[] {

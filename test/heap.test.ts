@@ -46,6 +46,22 @@ describe('heap', () => {
       expect(heap.heapSize).toEqual(5);
       expect(heap.max()).toEqual(10);
     });
+    it('when extracting max element from non-empty heap', () => {
+      const heap = new Heap<number>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      
+      expect(heap.extractMax()).toEqual(9);
+      expect(heap.heapSize).toEqual(8);
+    });
+    it('when extracting all elements from non-empty heap', () => {
+      const heap = new Heap<number>([1, 2, 3, 4]);
+      
+      expect(heap.extractMax()).toEqual(4);
+      expect(heap.extractMax()).toEqual(3);
+      expect(heap.extractMax()).toEqual(2);
+      expect(heap.extractMax()).toEqual(1);
+      expect(heap.heapSize).toEqual(0);
+      expect(heap.items).toEqual([]);
+    });
   });
   
 
