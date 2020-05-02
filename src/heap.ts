@@ -13,24 +13,54 @@ export class Heap<T> implements PriorityQueue<T> {
   insert(element: T): void {
     let i = this.heapSize++;
     this.items[i] = element;
-    while (this.items[i] > this.items[parentNode(i)]) {
-      swap(this.items, i, parentNode(i));
-      i = parentNode(i);
-    }
+    this.heapFilterUp(i);
   }
+
   max = (): T => this.items[0];
+
   extractMax(): T {
     const result = this.max();
-    this.items[0] = this.items[--this.heapSize];
-    this.items.length = this.heapSize;
-    this.heapify(this.items, 0);
+    if (result != null) {
+      const last = this.extractLast();
+      if (this.heapSize > 0) {
+        this.items[0] = last;
+        this.heapify(this.items, 0);
+      }
+    }
     return result;
+  }
+
+  increaseKey(i: number, k: T) {
+    const needIncrease = !this.items[i] || this.comparer(this.items[i], k) < 0;
+    if (needIncrease) {
+      this.items[i] = k;
+      this.heapFilterUp(i);
+    }
+  }
+
+  delete(i: number) {
+    const last = this.extractLast();
+    if (this.heapSize > 0) {
+      this.items[i] = last;
+      if (this.items[i] > this.items[parentNode(i)]) {
+        this.heapFilterUp(i);
+      } else {
+        this.heapify(this.items, i);
+      }
+    }
   }
 
   private buildHeap(items: T[]): T[] {
     return items
       .filter((_, i) => i <= parentNode(this.heapSize))
       .reduceRight((a, _y, i) => this.heapify(a, i), items);
+  }
+
+  private heapFilterUp(i: number) {
+    while (this.items[i] > this.items[parentNode(i)]) {
+      swap(this.items, i, parentNode(i));
+      i = parentNode(i);
+    }
   }
 
   private heapify(a: T[], index: number): T[] {
@@ -48,6 +78,13 @@ export class Heap<T> implements PriorityQueue<T> {
     }
     return a;
   }
+
+  private extractLast(): T {
+    const result = this.items[--this.heapSize];
+    this.items.length = this.heapSize;
+    return result;
+  }
+
   static heapsort<T>(items: T[]): T[] {
     const heap = new Heap<T>(items);
     while (heap.heapSize > 1) {
