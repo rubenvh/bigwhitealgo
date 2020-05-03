@@ -50,20 +50,20 @@ export class Heap<T> implements PriorityQueue<T> {
     }
   }
 
-  private buildHeap(items: T[]): T[] {
+  buildHeap(items: T[]): T[] {
     return items
       .filter((_, i) => i <= parentNode(this.heapSize))
       .reduceRight((a, _y, i) => this.heapify(a, i), items);
   }
 
-  private heapFilterUp(i: number) {
+  heapFilterUp(i: number) {
     while (this.comparer(this.items[i], this.items[parentNode(i)]) >= 1) {
       swap(this.items, i, parentNode(i));
       i = parentNode(i);
     }
   }
 
-  private heapify(a: T[], index: number): T[] {
+  heapify(a: T[], index: number): T[] {
     const l = left(index);
     const r = right(index);
     let largest = index;
@@ -79,7 +79,7 @@ export class Heap<T> implements PriorityQueue<T> {
     return a;
   }
 
-  private extractLast(): T {
+  extractLast(): T {
     const result = this.items[--this.heapSize];
     this.items.length = this.heapSize;
     return result;
