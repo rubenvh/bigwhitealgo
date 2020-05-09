@@ -1,4 +1,5 @@
 import { PriorityQueue } from './priorityqueue';
+import { swap } from './utils';
 export class Heap<T> implements PriorityQueue<T> {
   heapSize: number;
   items: T[];
@@ -94,13 +95,6 @@ export class Heap<T> implements PriorityQueue<T> {
     }
     return heap.items;
   }
-}
-
-export function swap(a: any[], x: number, y: number): any[] {
-  const temp = a[x];
-  a[x] = a[y];
-  a[y] = temp;
-  return a;
 }
 
 export const left = (i: number) => (i + 1) * 2 - 1;

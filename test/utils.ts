@@ -15,3 +15,9 @@ export function sortedArray(size: number): number[] {
     return p;
   }, [] as number[]);
 }
+
+export function randomArray(size: number): number[] {
+  return Array.from(Array(size).keys()).map(() =>
+    Math.floor(Math.random() * size)
+  );
+}

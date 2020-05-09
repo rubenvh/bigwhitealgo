@@ -1,5 +1,5 @@
 import { Heap } from './../src/heap';
-import { assertHeapProperty } from './utils';
+import { assertHeapProperty, randomArray } from './utils';
 
 describe('heap', () => {
   const getRandomString = (length: number): string => {
@@ -37,9 +37,7 @@ describe('heap', () => {
 
   describe('sorting', () => {
     it('works', () => {
-      const input = Array.from(Array(100).keys()).map(() =>
-        Math.floor(Math.random() * 100)
-      );
+      const input = randomArray(100);
       const output = Heap.heapsort<number>(input);
       expect(output.some((_x, i, a) => a[i] > a[i + 1])).toBeFalsy();
     });
