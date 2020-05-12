@@ -1,4 +1,4 @@
-import { swap } from './utils';
+import { swap, random } from './utils';
 
 export function quicksort<T>(
   a: T[],
@@ -33,7 +33,7 @@ function partition<T>(a: T[], p: number, r: number): number {
 }
 
 function randomizedPartition<T>(a: T[], p: number, r: number): number {
-  const i = Math.round(p + Math.random() * (r - p));
+  const i = random(p, r);
   swap(a, p, i);
   return partition(a, p, r);
 }
