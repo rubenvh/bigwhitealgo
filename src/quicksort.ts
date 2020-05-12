@@ -3,10 +3,11 @@ import { swap } from './utils';
 export function quicksort<T>(
   a: T[],
   p: number = 0,
-  r: number = a.length - 1
+  r: number = a.length - 1,
+  partitioner = partition
 ): void {
   if (p < r) {
-    const q = partition(a, p, r);
+    const q = partitioner ? partitioner(a, p, r) : partition(a, p, r);
     quicksort(a, p, q);
     quicksort(a, q + 1, r);
   }
@@ -29,4 +30,18 @@ function partition<T>(a: T[], p: number, r: number): number {
       return j;
     }
   }
+}
+
+function randomizedPartition<T>(a: T[], p: number, r: number): number {
+  const i = Math.round(p + Math.random() * (r - p));
+  swap(a, p, i);
+  return partition(a, p, r);
+}
+
+export function randomizedQuickSort<T>(
+  a: T[],
+  p: number = 0,
+  r: number = a.length - 1
+) {
+  quicksort<T>(a, p, r, randomizedPartition);
 }
