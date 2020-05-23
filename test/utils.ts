@@ -16,8 +16,8 @@ export function sortedArray(size: number): number[] {
   }, [] as number[]);
 }
 
-export function randomArray(size: number): number[] {
+export function randomArray(size: number, max: number = size): number[] {
   return Array.from(Array(size).keys()).map(() =>
-    Math.floor(Math.random() * size)
+    Math.floor(Math.random() * max)
   );
 }
